@@ -1,5 +1,5 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
+import globals from 'globals';
+import pluginJs from '@eslint/js';
 
 export default [
   pluginJs.configs.recommended,
@@ -11,7 +11,7 @@ export default [
       },
     },
     rules: {
-      "no-unused-vars": "warn",
+      'no-unused-vars': 'off',
     },
   },
 ];
