@@ -106,6 +106,19 @@ const user = {
 
 // Array
 
+const arr = ['a', { name: 'tiger' }, () => {}, 4, 5];
+
+console.log(arr);
+
 // function
+
+function sum(a, b) {
+  //parameter
+  return a + b;
+}
+
+const result = sum(10, 5); //argument
+
+console.log(result);
 
 // this
