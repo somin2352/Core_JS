@@ -39,10 +39,31 @@ let message =
 //       Yes | No
 
 // 영화 봤니?
-let didWatchMovie;
+// confirm(): 확인창
+function watchingMovie() {
+  let didWatchMovie = confirm('그 영화 봤니?');
+
+  if (didWatchMovie) {
+    alert('good!');
+  } else {
+    let goingToWatchMovie = confirm('영화 볼거니?');
+
+    if (goingToWatchMovie) {
+      let withWho = prompt('누구랑 갈거야?');
+      console.log(withWho);
+
+      if (withWho == 'you') {
+        console.log('좋아!');
+      } else {
+        console.log('그렇구나,,');
+      }
+    } else {
+      console.log('알겠어!');
+    }
+  }
+}
 
 // 영화 볼거니?
-let goingToWatchMovie;
 
 // if 문(statement)
 
@@ -53,3 +74,22 @@ let goingToWatchMovie;
 // 조건부 연산자
 
 // 멀티 조건부 연산자 식
+//include(): 문자열 안에 뭔자가 있는지 확인
+
+let didWatchMovie = 'no';
+let goingToWatchMovie = 'yes';
+
+const answer = didWatchMovie.includes('yes')
+  ? 'ok'
+  : goingToWatchMovie.includes('yes')
+    ? console.log('good!')
+    : 'ok';
+
+function render(node, isActive) {
+  // 조건부 랜더링
+  let template = `
+    <div>${isActive ? '안녕' : '잘가'}</div>
+  `;
+
+  node.insertAdjacentHTML('beforeend', template);
+}
