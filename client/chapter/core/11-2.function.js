@@ -96,16 +96,96 @@ obj.totalPrice();
 const result = calculateTotal(10000, 30000, 45000, 2500, 30000, 25000);
 
 // 익명(이름이 없는) 함수 (표현)식
-let anonymousFunctionExpression;
+let anonymousFunctionExpression = function () {};
 
 // 유명(이름을 가진) 함수 (표현)식
-let namedFunctionExpression;
+let namedFunctionExpression = function hello() {};
 
 // 콜백 함수 (표현)식
-let callbackFunctionExpression;
+let callbackFunctionExpression = function (condition, success, fail) {
+  if (condition)
+    success(); // const success = function(){ console.log('성공입니다!')}
+  else fail(); // const fail = function(){ console.log('실패입니다!')}
+};
+
+callbackFunctionExpression(
+  true,
+  function () {
+    console.log('성공입니다!');
+  },
+  function () {
+    console.log('실패입니다!');
+  }
+);
+
+// arrow function
+callbackFunctionExpression(
+  true,
+  () => console.log('성공입니다!'),
+  () => console.log('실패입니다!')
+);
+
+function movePage(url, success, fail) {
+  if (url.includes('https')) {
+    success(url);
+  } else {
+    fail();
+  }
+}
+
+movePage(
+  'https://www.daume.net',
+  function (url) {
+    console.log(
+      `현재 입력하신 url은 ${url} 입니다. 3초 뒤 해당 사이트로 이동합니다.`
+    );
+  },
+  function () {
+    console.log('잘못된 경로를 입력하셨습니다!');
+  }
+);
+
+// arrow function
+movePage(
+  'https://www.daum.net',
+  (url) => `현재 입력하신 url은 ${url}입니다. 3초 뒤 해당 사이트로 이동합니다.`,
+  () => console.log('잘못된 경로를 입력하셨습니다.')
+);
+
+// 비동기 통신일 때, 데이터를 받아오는 시간이 걸리는 것을 고려하여 콜백함수를 사용
+function getGeolocation(success, fail) {
+  navigator.geolocation.getCurrentPosition((so) => {
+    success(so.coords.latitude);
+  });
+}
+
+getGeolocation(
+  (data) => {
+    console.log(data);
+  },
+  () => {}
+);
 
 // 함수 선언문 vs. 함수 (표현)식
 
 // 즉시 실행 함수 (표현)식
 // Immediately Invoked Function Expression
 let IIFE;
+// 함수가 선언됨과 동시에 실행되는 것을 말합니다.
+// var는 함수 스코프 o (블록 스코프 x)
+// encapsulation(캡슐화)
+const MASTER = (function (g) {
+  console.log(g);
+
+  var uuid = 'asdf';
+  return {
+    getKey() {
+      return uuid;
+    },
+    setKey(value) {
+      uuid = value;
+    },
+  };
+})(window);
+
+// 모듈 프로그래밍 -> import export
