@@ -67,19 +67,54 @@ console.assert(rem('25px') === '1.5625rem');
 console.assert(rem('30px', 10) === '3rem');
 
 // css(node: string, prop: string, value: number|strung) : string;
-let css;
 
 function setCss(node, prop, value) {
   if (typeof node === 'string') {
     node = document.querySelector(node);
   }
-  if (!(prop in document.body.style)) throw new TypeError('Error!'); // prop이 style에 적합한 속성이 맞는지를 확인하는 코드
+  // prop이 유효한 css 속성이 맞는지를 확인하는 코드
+  if (!(prop in document.body.style)) {
+    throw new Error('is not a style property!');
+  }
   if (!value) throw new Error('Error!');
+
   let cssStyle = (node.style[prop] = value); // prop은 변수값이기 때문에 []으로 표기 -> 객체의 2가지 연산 표기법(.연산, [대괄호] 연산)
   return cssStyle;
 }
 
 setCss('.first', 'background', 'red');
+
+function getCss(node, prop) {
+  if (typeof node === 'string') {
+    node = document.querySelector(node);
+  }
+  if (!(prop in document.body.style)) {
+    throw new Error('is not a style property!');
+  }
+
+  let getStyle = getComputedStyle(node)[prop];
+  return getStyle;
+}
+
+const fontSize = getCss('.first', 'font-size');
+console.log(fontSize);
+
+function css(node, prop, value) {
+  if (value) {
+    setCss(node, prop, value);
+  } else {
+    return getCss(node, prop);
+  }
+
+  // return value ? setCss(node, prop, value) : getCss(node, prop);
+}
+
+// 화살표 함수
+// const _css = (node, prop, value) =>
+//   !value ? getCss(node, prop) : setCss(node, prop, value);
+
+css('.first', 'color'); //getter
+css('.first', 'color', 'blue'); //setter
 
 // 1. function name
 // 2. arguments (함수 실행부)
