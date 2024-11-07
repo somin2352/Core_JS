@@ -22,6 +22,7 @@ const resultZ = calcTotal(9000, -2500, 5000, 11900);
 // 함수 선언 → 일반 함수 (표현)식
 let calculateTotal = function () {
   // 함수 안에서만 접근 가능한 인수들의 집합 객체 : arguments => 유사 배열 => 지역 변수
+  // 화살표 함수에는 arguments가 없음, 일반 함수에만 존재
 
   let total = 0;
   //for문
@@ -48,8 +49,8 @@ let calculateTotal = function () {
 
   // reduce => 배열을 순환 -> 값을 반환(문자, 숫자, 불린,..)
   arr.reduce(function (acc, cur, index) {
-    // console.log(acc); // arr의 가장 첫번째 값을 acc에 넣어줌
-    // console.log(cur); // arr에서 acc를 제외한 나머지 value를 넣어줌
+    // console.log(acc); // arr의 가장 첫번째 값을 acc에 넣어줌 -> 초기값 설정 시 초기값이 들어감
+    // console.log(cur); // arr에서 acc를 제외한 나머지 value를 넣어줌 -> 초기값 설정 시 배열 전체가 들어감
     return acc + cur;
   }, 0);
   // reduce + arrow function
