@@ -190,6 +190,65 @@ const [first, second] = document.querySelector('span');
 console.log(first);
 console.log(second);
 
+for (const [k, v] of Object.entries(authUser)) {
+  console.log(k);
+  console.log(v);
+}
+
+Object.entries(authUser).forEach(([k, v]) => {
+  console.log(k);
+});
+
+Object.entries(authUser).map(([k, v]) => v);
+
+console.clear();
+
 /* -------------------------------------------- */
 /* 객체 구조 분해 할당  destructuring assignments    */
 /* --------------------------------------------- */
+const salaries = {
+  김미리: 800,
+  박혜미: 130,
+  이성우: 400,
+  명재휘: 80,
+};
+
+// 객체의 구조 분해 할당은 순서가 상관 없음
+// 객체의 key와 변수의 이름이 동일해야 함
+// 변수명을 바꿀 수 있음
+// value값이 undefined일 경우, 기본값 할당 가능
+
+const {
+  박혜미: 박 = 100,
+  이성우: 이 = 200,
+  명재휘: 명 = 300,
+  김미리: 김 = 400,
+} = salaries;
+
+const { 박혜미, 이성우, ...나머지 } = salaries;
+
+// default로 함수 호출 시 인자가 주어지지 않을 경우, undefined가 아닌 빈 객체를 반환
+function createUserObject({ name, age, address, ...rest } = {}) {
+  // const {
+  //   이름: name,
+  //   나이: age,
+  //   주소: address,
+  //   전화번호: phone,
+  //   직업: job,
+  // } = obj;
+  return { name, age, address };
+}
+
+const data = {
+  이름: '심선범',
+  나이: 35,
+  주소: '중랑구',
+  전화번호: '010-7169-0262',
+  직업: '검사',
+};
+
+const user = createUserObject(data);
+
+// console.log
+const { log: g } = console;
+g('안녕');
