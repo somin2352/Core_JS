@@ -76,12 +76,15 @@ function Tiger(name) {
 const 금강산호랑이 = new Tiger('금순이');
 
 // 함수의 기능들
-//call -> 함수를 대신 실행시켜줌 -> 덮어쓰기
-// apply
-// bind
+//call -> 함수를 대신 실행시켜줌 -> 빌려쓰기 -> 인수: 값
+// apply -> 함수를 대신 실행시켜줌 -> 빌려쓰기 -> 인수: 배열
+// bind -> 함수를 대신 실행x -> 빌려쓰기
 
 function sum(a, b) {
   console.log(this, a + b);
 }
 
 sum.call('안녕', 1, 2);
+sum.apply('안녕', [1, 2]);
+
+const _sum = sum.bind('안녕', 10, 20);
