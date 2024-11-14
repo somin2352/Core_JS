@@ -9,6 +9,7 @@ export default [
         ...globals.browser,
         ...globals.node,
         isObject: true,
+        getNode: true,
       },
     },
     rules: {
