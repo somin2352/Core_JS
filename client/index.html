@@ -6,16 +6,21 @@
     <title>core javascript</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="shortcut icon" href="./assets/favicon.svg" type="image/x-icon" />
-    <script src="./utils/type.js" defer></script>
-    <script src="./chapter/core/20.arrayMethod.js" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="./lib/utils/type.js" defer></script>
+    <script src="./lib/dom/getNode.js" defer></script>
+    <script src="./lib/error/typeError.js" defer></script>
+    <script src="./chapter/dom/03.nodeClass.js" defer></script>
   </head>
   <body>
-    <h1>
+    <!-- <h1>
       <span class="first">core</span>
       <span class="second">javascript</span>
       <button class="btn">CTA</button>
-    </h1>
-    <ul></ul>
+    </h1> -->
+
+    <!-- <ul></ul> -->
 
     <!-- <form>
       <input type="'text" class="todo" />
@@ -27,5 +32,24 @@
       <div class="dot"></div>
       <div class="circle"></div>
     </div> -->
+
+    <!-- <video autoplay id="videoElement"></video> -->
+
+    <nav>
+      <ul>
+        <li class="about" data-name="about">
+          😉
+          <span>ABOUT</span>
+        </li>
+        <li class="home" data-name="home">
+          🏠
+          <span>HOME</span>
+        </li>
+        <li class="contact" data-name="contact">
+          📞
+          <span>CONTACT</span>
+        </li>
+      </ul>
+    </nav>
   </body>
 </html>
