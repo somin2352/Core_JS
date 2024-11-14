@@ -56,7 +56,8 @@ console.log(about.tagName === 'LI');
 about.innerHTML = '';
 about.innerHTML += '어바웃 페이지'; // setter
 about.innerHTML; // getter
-// - textContent
+
+// - textContent -> 더 안전한 방법
 // * 요소 내의 텍스트에 접근
 // * 태그는 제외하고 오로지 텍스트만 추출
 
@@ -70,14 +71,14 @@ about.textContent; // getter
 // * hidden 프로퍼티는 기술적으로 style="display:none"와 동일
 
 // about.hidden = true;
-// let toggle = false;
 
+// let toggle = false;
 // setInterval(() => {
 //   getNode('nav').hidden = toggle ? true : false;
 //   toggle = !toggle;
 // }, 500);
 
-// gsap을 이용하여 위의 토글 기능 생성
+// gsap을 이용하여 위의 토글 기능 생성 -> 좀 더 부드럽게 보여짐
 gsap.to('nav', {
   opacity: 0,
   repeat: -1,

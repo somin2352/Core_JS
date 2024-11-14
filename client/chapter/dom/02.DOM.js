@@ -36,7 +36,10 @@ const about = nav.querySelector('.about');
 const contact = nav.querySelector('li[data-name="contact"]');
 // 4. nav 요소 안에 있는 모든 자식 요소
 const children = nav.querySelectorAll('*');
+const _children = nav.children[0].children;
 
+// _children을 배열로 만들고 li about을 찾아서 같은지 확인
+const li = [..._children].find((li) => li.matches('.about'));
 /* 문서 대상 찾기 */
 // - getElementById
 // - getElementsByTagName

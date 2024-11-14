@@ -46,6 +46,7 @@ for (const [key, value] of urlParams) {
 const { platform, userAgent, language, onLine, geolocation } = navigator;
 
 // callback => Promise
+// 콜백으로 코드를 짜야 안전하게 실행됨 -> 특히 서버 브라우저에서 데이터를 가져올 때 가져오는 시간이 달라질 수 있기 때문에
 
 // function getGeolocation(success){
 
@@ -63,7 +64,6 @@ const { platform, userAgent, language, onLine, geolocation } = navigator;
 // });
 
 // Promise
-
 function getGeolocation(success) {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition((data) => {
@@ -93,6 +93,8 @@ const { width, height, availWidth, availHeight, orientation } = screen;
 /* History 객체 ---------------------------------------------------------- */
 
 const { back, forward, go, length, pushState, replaceState } = history;
+
+//jQuery
 
 // Single
 // Page
