@@ -11,6 +11,11 @@ const types = {
   isFunction: true,
 };
 
+const dom = {
+  getNode: true,
+  insertLast: true,
+};
+
 export default [
   pluginJs.configs.recommended,
   {
@@ -18,8 +23,8 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-        isObject: true,
-        getNode: true,
+        ...types,
+        ...dom,
       },
     },
     rules: {
