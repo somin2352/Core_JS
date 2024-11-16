@@ -36,3 +36,42 @@ body {
     position: absolute;
   }
 }
+
+.is-active {
+  transition: transform 1s;
+  transform: translateY(100px) rotate(360deg);
+}
+
+/* 부드럽게 hover를 주는 방법 */
+.about {
+  transition: all 1s;
+}
+
+.about:hover {
+  background-color: dodgerblue;
+}
+
+.ground {
+  width: 400px;
+  height: 300px;
+  border: 5px solid black;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(70, 167, 70);
+  cursor: none;
+  overflow: hidden;
+}
+
+.ball {
+  /* transition: all 1s; */
+  display: inline-block;
+  pointer-events: none; /* ball은 포인터가 인식하지 못하도록 설정 */
+}
+
+.emotion {
+  font-size: 2rem;
+  position: absolute;
+  pointer-events: none;
+}
