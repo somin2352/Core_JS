@@ -8,10 +8,10 @@ const article = getNode('article');
 const p = getNode('p');
 
 section.addEventListener('click', (e) => {
-  // console.log('%c section', 'color:dodgerblue');
-  console.log('target:', e.target);
-  console.log('currentTarget:', e.currentTarget);
-  console.log(this);
+  // console.log('%c section','color:dodgerblue');
+
+  console.log('target : ', e.target); //p
+  console.log('currentTarget : ', e.currentTarget); //section
 });
 
 // article.addEventListener('click', () => {
