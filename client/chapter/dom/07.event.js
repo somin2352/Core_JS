@@ -45,17 +45,44 @@ function handleMove({ offsetX: x, offsetY: y }) {
   insertLast(ground, templete);
 }
 
-ground.addEventListener('mousemove', handleMove);
+// ground.addEventListener('mousemove', handleMove);
 
-//debounce
-const input = getNode('input');
+// const input = getNode('input');
+// function handleInput() {
+//   if (this.value === 'seonbeom@gmail.com') {
+//   }
+// }
+// input.addEventListener('input', handleInput);
 
-function handleInput() {
-  if (this.value === 'seonbeom@gmail.com') {
-  }
+function handle(e) {
+  console.log(e);
+}
+ground.addEventListener('mousemove', debounce(handle, 1000));
+
+// debounce
+// closure
+function debounce(callback, limit = 500) {
+  let timeout;
+  return function (e) {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      callback.call(this.e);
+    }, limit);
+  };
 }
 
-input.addEventListener('input', handleInput);
+// throttle
+function throttle(callback, limit = 500) {
+  let wait = false;
+  return function () {
+    if (!wait) {
+      callback();
+      wait = true;
+      setTimeout(() => (wait = false), limit);
+    }
+  };
+}
 
 /* 이벤트 추가/제거 --------------------------------------------------------- */
 
