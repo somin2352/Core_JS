@@ -1,41 +1,68 @@
-function getAttr(elementNode, property) {
-  if (isString(elementNode)) {
-    elementNode = getNode(elementNode);
-  }
-  if (!isString(property)) {
-    throw typeError("getAttr's second prop needs to be string type");
-  }
-  return elementNode.getAttribute(property);
+import { isString, isUndefined } from '../utils/type.js';
+import { getNode } from "./getNode.js";
+import { typeError } from "../error/typeError.js";
+
+function getAttr(node,prop){
+
+  if(isString(node)) node = getNode(node);
+
+  if(!isString(prop)) throw typeError('getAttr 함수에 전달된 두 번째 인수는 문자 타입 이어야 합니다.')
+
+
+  return node.getAttribute(prop)
+
 }
 
-function setAttr(node, prop, value) {
-  if (isString(node)) {
-    node = getNode(node);
-  }
 
-  if (isString(prop)) {
-    throw typeError("setAttr's second prop needs to be string type");
-  }
-
-  // value가 없거나 비어있을 경우
-  if (!value || value === '') {
+function setAttr(node,prop,value){
+  
+  if(isString(node)) node = getNode(node);
+  if(!isString(prop)) throw typeError('setAttr 함수의 두 번째 인수는 문자 타입 이어야 합니다.');
+  if(isUndefined(value) || value === ''){
+    
     node.removeAttribute(prop);
     return;
   }
 
-  // prop이 data로 시작할 경우
-  if (prop.startsWith('data')) {
+  if( prop.startsWith('data') ) {
     prop = prop.slice(5);
     node.dataset[prop] = value;
     return;
   }
 
-  node.setAttribute(prop, value);
+  node.setAttribute(prop,value);
+
 }
 
-function attr(node, prop, value) {
-  if (value) return setAttr(node, prop, value);
-  else return getAttr(node, prop);
-}
 
-// const attr = (node, prop, value) => !value ? getAttr(node,prop) : setAttr(node, prop, value)
+// function attr(node,prop,value){
+  
+//   if(!value){
+//     return getAttr(node,prop)
+//   }else{
+//     setAttr(node,prop,value)
+//   }
+// }
+
+export  const attr = (node,prop,value) => !value ? getAttr(node,prop) : setAttr(node,prop,value)
+
+// attr('.about','id') // getter
+// attr('.about','id','star') // setter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

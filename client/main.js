@@ -1,7 +1,37 @@
-// eslint를 제어 -> 변수 사용을 안했을 때 에러가 아니라 경고가 뜨도록 함
+// named export => import { } from '...'
+//default export => import ... from '...'
 
-// alert('경고창!');
+// import { getNode as $ } from './lib/dom/getNode.js';
+// import { insertLast } from './lib/dom/insert.js';
+// import { clearContents } from './lib/dom/clearContents.js';
 
-//confirm('확인창');
+import {
+  getNode as $,
+  getNodes,
+  insertLast,
+  clearContents,
+} from './lib/dom/index.js';
 
-//prompt('입력창');
+// 1. input 선택하기
+// 2. input 이벤트 바인딩
+// 3. input의 value 값 가져오기
+// 4. 숫자 더하기
+// 5. result에 출력하기
+
+/* global clearContents */
+
+const first = $('#firstNumber');
+const second = $('#secondNumber');
+const result = $('.result');
+
+function handleInput() {
+  const firstValue = Number(first.value);
+  const secondValue = +second.value;
+  const total = firstValue + secondValue;
+
+  result.textContent = '';
+  insertLast(result, total);
+}
+
+first.addEventListener('input', handleInput);
+second.addEventListener('input', handleInput);
