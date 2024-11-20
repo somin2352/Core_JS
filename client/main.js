@@ -26,10 +26,12 @@ function phase1() {
   const result = $('.result');
 
   function handleInput() {
+    // total 값을 위해 value를 모두 number 타입으로 처리
     const firstValue = Number(first.value);
     const secondValue = +second.value;
     const total = firstValue + secondValue;
 
+    // result 영역의 이전 내용을 모두 지우고 total 출력
     result.textContent = '';
     insertLast(result, total);
   }
@@ -51,7 +53,7 @@ function phase2() {
   const calculator = $('calculator');
   const result = $('.result');
   const clear = $('#clear');
-  const numberInputs = [...document.querySelectorAll('input:not(#clear')];
+  const numberInputs = [...document.querySelectorAll('input:not(#clear)')]; //clear input을 제외한 나머지 input 태그들을 배열로 저장
 
   function handleInput() {
     const total = numberInputs.reduce((acc, cur) => acc + Number(cur.value), 0);
