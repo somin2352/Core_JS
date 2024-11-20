@@ -19,7 +19,7 @@ section.addEventListener('click', (e) => {
 // });
 
 // p.addEventListener('click', (e) => {
-//   e.stopPropagation();
+//   e.stopPropagation(); // 부모의 클릭 이벤트가 실행되는 것을 방지
 //   console.log('%c p', 'color:orange');
 // });
 

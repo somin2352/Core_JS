@@ -61,7 +61,7 @@ function handleMove({ offsetX: x, offsetY: y }) {
 // input.addEventListener('input', handleInput);
 
 // debounce
-// 물이 쫄쫄쫄 떨어지는것(?)같은 원리
+// 앞의 반환값이 다음 값이 호출됨과 동시에 제거되므로 최종적으로 마지막 실행값만 반환됨
 function handle(e) {
   console.log(e);
 }
@@ -81,6 +81,7 @@ function debounce(callback, limit = 500) {
 
 // throttle
 // limit time마다 타이핑 값을 반환
+// 물이 쫄쫄쫄 떨어지는것(?)같은 원리
 function throttle(callback, limit = 500) {
   let wait = false;
   return function () {
