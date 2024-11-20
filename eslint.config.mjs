@@ -25,6 +25,7 @@ export default [
         ...globals.node,
         ...types,
         ...dom,
+        gsap: true,
       },
     },
     rules: {
