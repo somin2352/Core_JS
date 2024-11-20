@@ -1,72 +1,70 @@
-// named export => import { } from '...'
-//default export => import ... from '...'
-
-// import { getNode as $ } from './lib/dom/getNode.js';
-// import { insertLast } from './lib/dom/insert.js';
-// import { clearContents } from './lib/dom/clearContents.js';
-
+import data from './data/data.js';
 import {
   getNode as $,
-  getNodes,
   insertLast,
+  getRandom,
   clearContents,
-} from './lib/dom/index.js';
+  addClass,
+  removeClass,
+  showAlert,
+  isNumericString,
+  shake,
+  copy,
+} from './lib/index.js';
 
-function phase1() {
-  // 1. input 선택하기
-  // 2. input 이벤트 바인딩
-  // 3. input의 value 값 가져오기
-  // 4. 숫자 더하기
-  // 5. result에 출력하기
+//[phase-1]
+// 1. 주접떨기 버튼을 클릭하는 함수
+// -주접 떨기 버튼 가져오기
+// -이벤트 연결
 
-  /* global clearContents */
+// 2. input 값 가져오기
+// - 콘솔에 출력
 
-  const first = $('#firstNumber');
-  const second = $('#secondNumber');
-  const result = $('.result');
+// 3. data 함수에서 주접 1개 꺼내기
+// - n번째 랜덤 주접 꺼내기
+// - Math.random()
 
-  function handleInput() {
-    const firstValue = Number(first.value);
-    const secondValue = +second.value;
-    const total = firstValue + secondValue;
+// 4. result에 렌더링하기
+// - insertLast()
 
-    result.textContent = '';
-    insertLast(result, total);
+// [phase-2]
+// 5. 예외처리
+// - 이름이 없을 경우 콘솔에 에러 출력
+// - 숫자만 들어오면 콘솔에 에러 출력
+
+const submit = $('#submit');
+const nameField = $('#nameField');
+const result = $('.result');
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const name = nameField.value;
+  const list = data(name);
+  const random = list[getRandom(list.length)];
+
+  if (!name || name.replaceAll(' ', '') === '') {
+    showAlert('.alert-error', '공백은 허용하지 않습니다.', 1200);
+    // addClass(nameField, 'shake');
+    shake(nameField);
+
+    return;
   }
 
-  function handleClear(e) {
-    e.preventDefault();
-    clearContents(first);
-    clearContents(second);
+  if (!isNumericString(name)) {
+    showAlert('.alert-error', '정확한 이름을 입력해 주세요', 1200);
 
-    result.textContent = '-';
+    return;
   }
-
-  first.addEventListener('input', handleInput);
-  second.addEventListener('input', handleInput);
-  clear.addEventListener('click', handleClear);
+  clearContents(result);
+  insertLast(result, random);
 }
 
-function phase2() {
-  const calculator = $('calculator');
-  const result = $('.result');
-  const clear = $('#clear');
-  const numberInputs = [...document.querySelectorAll('input:not(#clear')];
-
-  function handleInput() {
-    const total = numberInputs.reduce((acc, cur) => acc + Number(cur.value), 0);
-
-    clearContents(result);
-    insertLast(result, total);
-  }
-
-  function handleClear(e) {
-    e.preventDefault();
-    numberInputs.forEach(clearContents);
-    //numberInputs.forEach((input)=>{clearContents(input)})
-    result.textContent = '-';
-  }
-
-  calculator.addEventListener('input', handleInput);
-  clear.addEventListener('click', handleClear);
+function handleCopy() {
+  const text = this.textContent;
+  copy(text).then(() => {
+    showAlert('.alert-success', '클립보드 복사 완료!');
+  });
 }
+
+submit.addEventListener('click', handleSubmit);
+result.addEventListener('click', handleCopy);
