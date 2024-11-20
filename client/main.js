@@ -52,14 +52,14 @@ const [rollingButton, recordButton, resetButton] = getNodes(
 const recordListWrapper = getNode('.recordListWrapper');
 
 // closure
-// IFFE pattern
+// IFFE pattern -> 즉시 실행 함수
 const handleRollingDice = (() => {
   let isClicked = false;
   let stopAnimation;
 
   return () => {
     if (!isClicked) {
-      stopAnimation = setInterval(diceAnimation, 100);
+      stopAnimation = setInterval(diceAnimation, 100); // 0.1초 간격으로 diceAnimation()
       recordButton.disabled = true;
       resetButton.disabled = true;
     } else {
@@ -74,6 +74,7 @@ const handleRollingDice = (() => {
 let count = 0;
 let total = 0;
 
+// 기록 tbody 내용 추가 함수
 function createItem(value) {
   const templete = `
   <tr>
@@ -86,6 +87,7 @@ function createItem(value) {
   return templete;
 }
 
+// tbody에 createItem의 리턴 내용을 렌더링하는 함수
 function renderRecordItem() {
   const diceNumber = memo('cube').getAttribute('dice');
 
@@ -96,7 +98,7 @@ function handleRecord() {
   recordListWrapper.hidden = false;
 
   renderRecordItem();
-  endScroll(recordListWrapper);
+  endScroll(recordListWrapper); // scrollTop = scrollHeight -> 스크롤이 항상 가장 하단에 위치하도록 설정
 }
 
 function handleReset() {

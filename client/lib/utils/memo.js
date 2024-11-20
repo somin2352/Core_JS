@@ -1,3 +1,4 @@
+// document.querySelector을 많이 사용할 시 생기는 성능 이슈를 메모이제이션으로 해결하는 함수
 export const memo = (() => {
   const cache = {};
 
