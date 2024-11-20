@@ -40,16 +40,19 @@ function handleSubmit(e) {
   e.preventDefault();
   const name = nameField.value;
   const list = data(name);
-  const random = list[getRandom(list.length)];
+  const random = list[getRandom(list.length)]; // Math.random()*list.length
 
+  // 이름 입력란에 값이 없거나 공백이 들어왔을 경우
+  // replaceAll로 공백을 모두 빈 문자로 바꿈
   if (!name || name.replaceAll(' ', '') === '') {
     showAlert('.alert-error', '공백은 허용하지 않습니다.', 1200);
-    // addClass(nameField, 'shake');
+    // addClass(nameField, 'shake'); -> 이 경우 최초 실행 한번만 동작하므로 shake 함수(gsap animation)를 통해 클릭할 때마다 동작하도록 함
     shake(nameField);
 
     return;
   }
 
+  // isNaN
   if (!isNumericString(name)) {
     showAlert('.alert-error', '정확한 이름을 입력해 주세요', 1200);
 
@@ -62,7 +65,7 @@ function handleSubmit(e) {
 function handleCopy() {
   const text = this.textContent;
   copy(text).then(() => {
-    showAlert('.alert-success', '클립보드 복사 완료!');
+    showAlert('.alert-success', '클립보드 복사 완료!'); //.then => copy()가 제대로 실행된 후 실행
   });
 }
 
