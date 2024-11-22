@@ -45,7 +45,7 @@ const defaultOption = {
 };
 
 // promise 객체를 반환하는 함수 => 재사용
-function delayP(options) {
+export function delayP(options) {
   let config = { ...defaultOption };
 
   // options 값으로 숫자를 받을 경우 timeout에 덮어쓰기
@@ -90,7 +90,9 @@ delayP({
 //   });
 
 /* ----------- async & await -------------- */
+// promise를 편리하게 쓰기 위함
 // async 함수는 무조건 promise object를 반환
+
 // await의 2가지 기능
 // 1. 코드 실행 흐름 제어
 // 2. result 꺼내오기
@@ -98,6 +100,9 @@ delayP({
 async function d() {
   return 1;
 }
+
+//IIAFE
+// (async ()=>{await~})();
 
 const _d = d();
 
@@ -182,4 +187,4 @@ async function getData() {
   );
 }
 
-getData();
+// getData();
