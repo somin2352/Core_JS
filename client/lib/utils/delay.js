@@ -1,5 +1,7 @@
 import { getNode } from './../dom/getNode.js';
 import { isNumber, isObject } from './type.js';
+import { xhrPromise } from './xhr.js';
+import { insertLast } from './../index.js';
 
 function delay(callback, timeout = 1000) {
   setTimeout(callback, timeout);
@@ -86,3 +88,98 @@ delayP({
 //     first.style.top = '0px';
 //     return delayP(false);
 //   });
+
+/* ----------- async & await -------------- */
+// async 함수는 무조건 promise object를 반환
+// await의 2가지 기능
+// 1. 코드 실행 흐름 제어
+// 2. result 꺼내오기
+
+async function d() {
+  return 1;
+}
+
+const _d = d();
+
+_d.then(console.log);
+
+async function delayA() {
+  const p = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('성공');
+    }, 2000);
+  });
+  const result = await p; // promise 실행 완료할 때까지 대기
+
+  return result;
+}
+
+// console.log(delayA());
+
+// promise .then
+function _라면끓이기() {
+  delayP({ data: '물' })
+    .then((res) => {
+      console.log(res);
+
+      return delayP({ data: '스프' });
+    })
+    .then((res) => {
+      console.log(res);
+
+      return delayP({ data: '면' });
+    })
+    .then((res) => {
+      console.log(res);
+
+      return delayP({ data: '계란' });
+    })
+    .then((res) => {
+      console.log(res);
+
+      return delayP({ data: '그릇' });
+    })
+    .then((res) => {
+      console.log(res);
+    });
+}
+
+// async await
+async function 라면끓이기() {
+  const a = await delayP({ data: '물' });
+  console.log(a);
+
+  const b = await delayP({ data: '스프' });
+  console.log(b);
+
+  // const c = await delayP({data:'면'})
+  console.log('면');
+
+  // const d = await delayP({data:'계란'})
+  console.log('계란');
+
+  const e = await delayP({ data: '그릇' });
+  console.log(e);
+}
+
+function _getData() {
+  xhrPromise.get('https://pokeapi.co/api/v2/pokemon/7').then((res) => {
+    console.log(res);
+
+    insertLast(
+      document.body,
+      `<img src="${res.sprites.other.showdown['front_default']}" alt="" />`
+    );
+  });
+}
+
+async function getData() {
+  const result = await xhrPromise.get('https://pokeapi.co/api/v2/pokemon/7');
+
+  insertLast(
+    document.body,
+    `<img src="${result.sprites.other.showdown['front_default']}" alt="" />`
+  );
+}
+
+getData();

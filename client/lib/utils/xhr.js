@@ -114,7 +114,7 @@ const defaultOption = {
   },
 };
 
-function xhrPromise(options = {}) {
+export function xhrPromise(options = {}) {
   const config = {
     ...defaultOption,
     ...options,
@@ -192,15 +192,15 @@ xhrPromise.post = (url) => {
   });
 };
 
-xhrPromise.get(END_POINT).then((res) => {
-  console.log(res);
-});
+// xhrPromise.get(END_POINT).then((res) => {
+//   console.log(res);
+// });
 
-xhrPromise
-  .post(END_POINT, {
-    name: 'tiger',
-    age: 35,
-  })
-  .then((res) => {
-    console.log(res);
-  });
+// xhrPromise
+//   .post(END_POINT, {
+//     name: 'tiger',
+//     age: 35,
+//   })
+//   .then((res) => {
+//     console.log(res);
+//   });
