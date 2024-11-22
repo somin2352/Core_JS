@@ -44,7 +44,7 @@ function xhr({
     }
   });
   // post 시 body에 값을 전달
-  xhr.send(JSON.stringify(body));
+  // xhr.send(JSON.stringify(body));
 }
 
 const obj = {
@@ -135,7 +135,7 @@ export function xhrPromise(options = {}) {
   }
 
   // body가 있으면 send, 없으면 null
-  xhr.send(body ? JSON.stringify(body) : null);
+  // xhr.send(body ? JSON.stringify(body) : null);
 
   return new Promise((resolve, reject) => {
     xhr.addEventListener('readystatechange', () => {
