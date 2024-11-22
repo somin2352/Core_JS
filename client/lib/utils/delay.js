@@ -101,7 +101,7 @@ async function d() {
 
 const _d = d();
 
-_d.then(console.log);
+// _d.then(console.log);
 
 async function delayA() {
   const p = new Promise((resolve) => {
