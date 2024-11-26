@@ -1,32 +1,37 @@
-import { getStorage, getNode, setStorage, deleteStorage } from './lib/index.js';
+// console.log(temp.content.cloneNode(true));
 
-// 1. input event binding
-// 2. input 값을 로컬 스토리지에 저장(타이핑하는 순간순간마다)
-// 3. init 함수 안에서 로컬스토리지에 있는 값을 가져와 input의 value로 설정
-// 4. 새로고침 -> 데이터 유지
+class MyElement extends HTMLElement {
+  constructor() {
+    super();
 
-const text = getNode('textarea');
-const clear = getNode('button[data-name="clear"]');
+    this.attachShadow({ mode: 'open' });
+    this._render();
+    this.card = this.shadowRoot.querySelector('.card');
+  }
 
-// 새로고침을 해도 textarea 입력란에 데이터 유지
-function init() {
-  getStorage('text').then((res) => {
-    text.value = res;
-  });
+  connectedCallback() {
+    this.card.addEventListener('click', this.handleClick.bind(this));
+  }
+
+  handleClick() {
+    console.log(this.getAttribute('data-name'));
+  }
+
+  _render() {
+    this.shadowRoot.innerHTML = /* html */ `
+      
+        <style>
+        @import url('./style.css'); 
+        </style>
+
+        
+        <div class="card">
+          <slot name="title">Default Title</slot>
+          <slot name="content">Default Contents</slot>
+          <slot></slot>
+        </div>
+    `;
+  }
 }
 
-// 로컬 스토리지에 입력값 저장
-function handleInput() {
-  setStorage('text', this.value);
-}
-
-// 로컬 스토리지의 데이터 삭제
-function handleClear() {
-  text.value = '';
-  deleteStorage('text');
-}
-
-text.addEventListener('input', handleInput);
-clear.addEventListener('click', handleClear);
-
-init();
+customElements.define('my-element', MyElement);
