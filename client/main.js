@@ -1,79 +1,171 @@
-import {
-  insertLast,
-  som,
-  getNode,
-  renderUserCard,
-  changeColor,
-  renderLoadingSpinner,
+import { 
+  som, 
   delayP,
+  getNode,
+  insertLast, 
+  changeColor,
+  clearContents,
+  renderLoadingSpinner,
+  renderUserCard,
   renderEmptyCard,
-} from './lib/index.js';
+ } from "./lib/index.js";
 
-const END_POINT = 'https://jsonplaceholder.typicode.com/users';
 
+
+const END_POINT = 'http://localhost:3000/users'
 const userCardInner = getNode('.user-card-inner');
 
-// user 데이터 fetch
-async function renderUserList() {
-  // 데이터 호출 전에 스피너를 보여줌
-  renderLoadingSpinner(userCardInner);
 
-  try {
+
+
+async function renderUserList(){
+
+  renderLoadingSpinner(userCardInner)
+
+  try{
+
     const response = await som.get(END_POINT);
 
-    // 데이터 불러오기를 완료하면 로딩 스피너 제거
-    // getNode('.loadingSpinner').remove();
+    // getNode('.loadingSpinner').remove()
 
-    // 로딩 스피너를 부드럽게 사라지게 하기 위한 애니메이션
-    gsap.to('.loadingSpinner', {
-      opacity: 0,
-      onComplete() {
-        this._targets[0].remove();
-      },
-    });
+    gsap.to('.loadingSpinner',{
+      opacity:0,
+      onComplete(){
+        this._targets[0].remove() //애니메이션 완료 후 제거 
+      }
+    })
 
     const data = response.data;
-
-    // delay를 주어서 아래 코드의 렌더링을 늦춤
-    await delayP(500);
-
-    // fetch 데이터 유저의 이름만 콘솔에 출력
-    data.forEach((user) => renderUserCard(userCardInner, user));
-
-    // 카드 컴포넌트에 색상 주기
+  
+    
+    await delayP(1000)
+  
+    
+    data.forEach((user)=> {
+      
+      renderUserCard(userCardInner,user)
+    })
+  
     changeColor('.user-card');
-
-    // 카드 컴포넌트 렌더링 애니메이션
-    gsap.from('.user-card', {
-      x: -100,
-      opacity: 0,
-      stagger: 0.1,
-    });
-  } catch {
-    // 실제 에러가 발생 후 empty 카드가 렌더링
-    renderEmptyCard(userCardInner);
-    throw new Error('error@');
+  
+    gsap.from('.user-card',{
+      x:-100,
+      opacity:0,
+      stagger:{
+        each:0.1,
+        from:'start'
+      }
+    })
+  
+  
   }
+  catch{
+    // 데이터 로드 실패 시 빈 상태 카드 렌더링 
+    renderEmptyCard(userCardInner)
+    
+  }
+
 }
 
-renderUserList();
 
-// delete 이벤트
-// userCardInner에 이벤트를 주고 이벤트 위임
-function handleDeleteCard(e) {
+renderUserList()
+
+// 카드 삭제 함수 
+function handleDeleteCard(e){
   const button = e.target.closest('button');
 
-  if (!button) return;
+  if(!button) return;
 
   const article = button.parentElement;
-
-  // id값만 뽑아내기
   const index = article.dataset.index.slice(5);
+  
+  // delete 요청 시 뒤에 index를 추가하여 삭제할 요소 구분
+  som.delete(`${END_POINT}/${index}`).then(()=>{
+    alert('삭제가 완료됐습니다.')
 
-  // handler를 비동기로 만들지 않기 때문에 promise then으로 작성
-  som.delete(`${END_POINT}/${index}`).then(() => {
-    alert('complete delete!');
-  });
+
+    // 기존 카드 컨텐츠 제거 
+    clearContents(userCardInner)
+    renderUserList() //삭제 후 리스트 재렌더링 
+  })
+
 }
 
-userCardInner.addEventListener('click', handleDeleteCard);
+
+
+userCardInner.addEventListener('click',handleDeleteCard)
+
+
+
+
+const createButton = getNode('.create');
+const cancelButton = getNode('.cancel');
+const doneButton = getNode('.done');
+
+// create 버튼을 선택한다.
+// 클릭 이벤트를 바인딩한다.
+// create에 open 클래스를 추가한다.
+
+// cancel 버튼을 선택한다.
+// 클릭 이벤트를 바인딩한다.
+// create에 open 클래스를 제거한다.
+
+
+// POST 통신을 해주세요.
+
+// 1. input의 value를 가져온다.
+// 2. value를 모아서 객체를 생성
+// 3. 생성 버튼을 누르면 POST통신을 한다.
+// 4. body에 생성한 객체를 실어보낸다.
+// 5. 카드 컨텐츠 비우기
+// 6. 유저카드 리랜더링
+
+const nameField = getNode('#nameField');
+
+// 생성 버튼 클릭 이벤트 
+function handleCreate(){
+  gsap.to('.pop',{autoAlpha:1})
+  // this.classList.add('open');
+  // getNode('#nameField').focus()
+  
+}
+
+// 취소 버튼 클릭 이벤트 
+function handleCancel(e){
+  // 이벤트 버블링 방지 
+  e.stopPropagation(); 
+  // createButton.classList.remove('open');
+  gsap.to('.pop',{autoAlpha:0})
+}
+
+// 완료 버튼 클릭 이벤트 
+function handleDone(e){
+  e.preventDefault();
+
+  const username = getNode('#nameField').value;
+  const email = getNode('#emailField').value;
+  const website = getNode('#siteField').value;
+
+  
+  som.post(END_POINT,{ username, email, website })
+  .then(()=>{
+    // createButton.classList.remove('open');
+    gsap.to('.pop',{autoAlpha:0})
+
+    // 기존 카드 제거하고 재렌더링
+    clearContents(userCardInner) 
+    renderUserList(); 
+
+    // input창 초기화 
+    getNode('#nameField').value = ''
+    getNode('#emailField').value = ''
+    getNode('#siteField').value = ''
+    
+  })
+  
+}
+
+
+createButton.addEventListener('click',handleCreate)
+cancelButton.addEventListener('click',handleCancel)
+doneButton.addEventListener('click',handleDone)

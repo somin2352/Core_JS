@@ -1,20 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko-KR">
   <head>
+    <title>범쌤과 함께 배우는 core javascript</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>core javascript</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="shortcut icon" href="./assets/favicon.svg" type="image/x-icon" />
-
+    
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="./main.js" type="module"></script>
+
+    <script src="./main.js" type="module"></script> 
+    
   </head>
   <body>
-    <div class="user-card-list">
+
+    <div class="create">
+      <button> CREATE </button>
+      
+      <div class="pop">
+        <form action="/">
+          <div>
+           <label for="nameField">name : </label>
+           <input type="text" id="nameField" required />
+          </div>
+ 
+          <div>
+           <label for="emailField">email : </label>
+           <input type="email" id="emailField" required />
+          </div>
+ 
+          <div>
+           <label for="siteField">website : </label>
+           <input type="text" id="siteField" required />
+          </div>
+ 
+          <div>
+            <button class="cancel" type="button">취소</button>
+            <button class="done" type="submit">생성</button>
+          </div>
+       </form>
+      </div>
+    </div>
+
+
+    <div class="user-card-list" >
+
       <h2>User List</h2>
 
-      <div class="user-card-inner"></div>
+      <div class="user-card-inner">
+        
+
+
+      </div>
+
     </div>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
