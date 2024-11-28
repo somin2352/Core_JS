@@ -2,18 +2,18 @@
   "name": "core_js",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "live-server client --host=localhost --port=5500 --no-browser"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "somin",
   "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "eslint": "^9.13.0",
-    "globals": "^15.11.0",
-    "live-server": "^1.2.2",
-    "prettier": "^3.3.3"
+  "description": "Vite 툴체인을 사용한 개발 환경 메뉴얼 구성",
+  "dependencies": {
+    "kind-tiger": "^1.0.1",
+    "vite": "^6.0.1"
   }
 }
