@@ -13,3 +13,7 @@
   --radius-s: 10px;
   --radius-m: 20px;
 }
+
+body {
+  background-color: #ddd;
+}
