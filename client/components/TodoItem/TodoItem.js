@@ -28,14 +28,17 @@ export class TodoItem extends HTMLElement {
     this.contentInput.value = value;
     this.checkbox.checked = checked;
 
+    // checked = true일 경우 '.done' 추가 
     if (checked) {
       this.contentInput.classList.add('done');
     }
   }
 
+  // 컴포넌트가 DOM에 추가될 때 호출되는 콜백 메서드
   connectedCallback() {
     const value = this.contentInput.value;
 
+    // content.value에 value가 없으면 기본값으로 'TASK' + this.id를 제공
     this.contentInput.value = value ? value : 'TASK' + this.id;
 
     this.deleteButton.addEventListener('click', () => this.handleDelete());
@@ -44,16 +47,19 @@ export class TodoItem extends HTMLElement {
     // focus를 벗어나는 순간 이벤트 실행
     this.contentInput.addEventListener('blur', () => this.handleUpdate());
     this.contentInput.addEventListener('keydown', (e) =>
-      this.handleEnterPress(e)
+      this.handleEnterPress(e) // 이벤트 감지 필요 
     );
 
+    // 처음 렌더링될 때 state에 상태 넣어주기 
     s.AddTodoItem(this.id, this.contentInput.value, this.checkbox.checked);
 
     this.saveData();
   }
 
   handleEnterPress({ keyCode }) {
+    // keyCode = 13 -> enter 입력 시 
     if (keyCode === 13) {
+      // 다음 li 요소가 존재할 경우 
       if (this.nextElementSibling !== null) {
         const next =
           this.nextElementSibling.shadowRoot.querySelector(
@@ -63,6 +69,7 @@ export class TodoItem extends HTMLElement {
         // 현재 input의 포커스 벗어나기
         this.contentInput.blur();
         next.focus();
+
       } else {
         this.contentInput.blur();
       }
@@ -70,8 +77,8 @@ export class TodoItem extends HTMLElement {
   }
 
   handleUpdate() {
-    s.UpdateTodoItem(this.id, this.contentInput.value);
-    this.saveData();
+    s.UpdateTodoItem(this.id, this.contentInput.value); //state에서 value 상태 업데이트 
+    this.saveData(); // 로컬 스토리지에 변동사항 저장 
   }
 
   handleDelete() {
@@ -82,8 +89,8 @@ export class TodoItem extends HTMLElement {
       // 애니메이션 동작 완료 후 실행
       onComplete() {
         this.remove();
-        s.removeTodoItem(this.id);
-        this.saveData();
+        s.removeTodoItem(this.id); // state에서 삭제 
+        this.saveData(); // 로컬 스토리지에 변동사항 저장 
       },
     });
   }
@@ -95,7 +102,9 @@ export class TodoItem extends HTMLElement {
       this.contentInput.classList.remove('done');
     }
 
+    // state에 checked 상태 업데이트 
     s.CheckTodoItem(this.id, this.checkbox.checked);
+    // 로컬 스토리지에 변동사항 저장 
     this.saveData();
   }
 

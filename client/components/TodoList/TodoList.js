@@ -29,7 +29,8 @@ export class TodoList extends HTMLElement {
     // h1에 애니메이션
     tl.from(this.container.children[0], { opacity: 0, y: 30 });
 
-    // 높이 고정때문에 li가 많아지면 보이지 않는 문제를 해결하기 위해 애니메이션 실행 후 모든 요소 clear
+    // 리스트 요소에 애니메이션 추가
+    // 높이 고정 문제를 해결하기 위해 애니메이션 종료 후 clearProps로 속성을 초기화
     tl.from(this.container.children[1], {
       opacity: 0,
       height: 0,
@@ -55,6 +56,7 @@ export class TodoList extends HTMLElement {
     this.todo.append(todoItem);
   }
 
+  // todoTemplate.content의 내용을 복제하여 Shadow DOM에 추가
   render() {
     this.shadowRoot.append(todoTemplate.content.cloneNode(true));
   }
