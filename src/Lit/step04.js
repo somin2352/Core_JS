@@ -15,15 +15,14 @@ class NameTag extends LitElement {
     this.name = e.target.value;
   }
 
-  handleClick(e) {
+  handleClick() {
     alert(this.name);
   }
-
   render() {
     return html/* html */ `
       <p>안녕, ${this.name}</p>
       <input @input=${this.handleInput} type="text" placeholder="이름을 입력해주세요" />
-      <button type="button" @click=${this.handleClick}>Click Me</button>
+      <button @click=${this.handleClick} type="button">click me</button>
     `;
   }
 }
