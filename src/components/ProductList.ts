@@ -7,6 +7,8 @@ import gsap from "gsap";
 
 @customElement("product-list")
 class ProductList extends LitElement {
+  // Lit의 @property 데코레이터를 사용해 data라는 속성을 정의
+  // Product 타입을 기본값으로 사용하며 초기값은 빈 데이터 구조
   @property({ type: Object }) data: Product = {
     items: [],
     page: 0,
@@ -66,8 +68,9 @@ class ProductList extends LitElement {
     `,
   ];
 
+  // 컴포넌트가 DOM에 연결될 때 호출되는 콜백
   connectedCallback() {
-    super.connectedCallback();
+    super.connectedCallback(); // 부모 클래스의 connectedCallback 호출
     this.fetchData();
   }
 
@@ -78,8 +81,9 @@ class ProductList extends LitElement {
     this.data = data;
   }
 
+  // 상태가 업데이트될 때 호출되는 메서드
   updated(changedProperties: Map<string | number | symbol, unknown>): void {
-    super.updated(changedProperties);
+    super.updated(changedProperties); // 부모 클래스의 updated 호출
 
     const item = this.renderRoot.querySelectorAll(".product-item");
 
