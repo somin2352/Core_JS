@@ -18,7 +18,7 @@ export class Header extends HTMLElement {
 
     <nav>
       <ul class="flex gap-5">
-        <li><a href="/">HONE</a></li>
+        <li><a href="/">HOME</a></li>
         <li><a href="/">PRODUCT</a></li>
         <li><a href="/">CONTACT</a></li>
       </ul>
