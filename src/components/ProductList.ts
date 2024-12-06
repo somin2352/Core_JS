@@ -1,14 +1,12 @@
 import { LitElement, html, css, CSSResultGroup } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import resetCSS from "../Layout/resetCSS";
-import { Product } from "../@types/type";
+import { Auth, Product } from "../@types/type";
 import { getPBImageURL } from "../api/getPBImageURL";
 import gsap from "gsap";
 
 @customElement("product-list")
 class ProductList extends LitElement {
-  // Lit의 @property 데코레이터를 사용해 data라는 속성을 정의
-  // Product 타입을 기본값으로 사용하며 초기값은 빈 데이터 구조
   @property({ type: Object }) data: Product = {
     items: [],
     page: 0,
@@ -16,6 +14,8 @@ class ProductList extends LitElement {
     totalItems: 0,
     totalPages: 0,
   };
+
+  @state() loginData = {} as Auth;
 
   static styles: CSSResultGroup = [
     resetCSS,
@@ -65,12 +65,22 @@ class ProductList extends LitElement {
           }
         }
       }
+
+      .new-post {
+        padding: 0.5rem 1rem;
+        background-color: dodgerblue;
+        color: white;
+        border-radius: 20px;
+        position: fixed;
+        transform: translate(-50%);
+        left: 50%;
+        bottom: 2rem;
+      }
     `,
   ];
 
-  // 컴포넌트가 DOM에 연결될 때 호출되는 콜백
   connectedCallback() {
-    super.connectedCallback(); // 부모 클래스의 connectedCallback 호출
+    super.connectedCallback();
     this.fetchData();
   }
 
@@ -79,11 +89,12 @@ class ProductList extends LitElement {
 
     const data = await response.json();
     this.data = data;
+
+    this.loginData = JSON.parse(localStorage.getItem("auth") ?? "{}");
   }
 
-  // 상태가 업데이트될 때 호출되는 메서드
   updated(changedProperties: Map<string | number | symbol, unknown>): void {
-    super.updated(changedProperties); // 부모 클래스의 updated 호출
+    super.updated(changedProperties);
 
     const item = this.renderRoot.querySelectorAll(".product-item");
 
@@ -97,13 +108,15 @@ class ProductList extends LitElement {
   }
 
   render() {
+    const { isAuth } = this.loginData;
+
     return html`
       <div class="container">
         <ul>
           ${this.data.items.map(
             (item) => html`
               <li class="product-item">
-                <a href="/">
+                <a href="${isAuth ? `/src/pages/detail/index.html?product=${item.id}` : `/`}">
                   <figure>
                     <img src="${getPBImageURL(item)}" alt="" />
                   </figure>
@@ -120,6 +133,8 @@ class ProductList extends LitElement {
           )}
         </ul>
       </div>
+
+      <a class="new-post" href="/src/pages/newPost/">+ 상품추가</a>
     `;
   }
 }
